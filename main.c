@@ -6,7 +6,7 @@
 /*   By: dquartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 10:25:52 by dquartin          #+#    #+#             */
-/*   Updated: 2018/04/18 21:37:35 by dquartin         ###   ########.fr       */
+/*   Updated: 2018/04/19 15:09:04 by dquartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,28 @@ void	malloc_struct(t_all **all, int ***coord, int i)
 		return ;
 }
 
+int		loop(char **tab, int i, int j, t_all **all)
+{
+	int		min;
+	int		max;
+
+	min = 0;
+	max = 0;
+	min = (tab[i][j] < min) ? tab[i][j] : min;
+	max = (tab[i][j] > max) ? tab[i][j] : max;
+	(*all)->pixels->delta_size = max - min;
+	j++;
+	return (j);
+}
+
 int		**get_coord(char **tab, t_all **all)
 {
 	int		i;
 	int		j;
-	int		min;
-	int		max;
 	int		**coord;
 	char	**tmp;
 
 	i = 0;
-	min = 0;
-	max = 0;
 	malloc_struct(all, &coord, i);
 	while (tab[i])
 	{
@@ -44,16 +54,13 @@ int		**get_coord(char **tab, t_all **all)
 		while (tmp[j])
 		{
 			coord[i][j] = ft_atoi(tmp[j]);
-			min = (tab[i][j] < min) ? tab[i][j] : min;
-			max = (tab[i][j] > max) ? tab[i][j] : max;
-			j++;
+			j = loop(tab, i, j, all);
 		}
 		(*all)->pixels->x = j;
 		coord = ft_realloc(coord, (i + 1) * INT, (i + 2) * INT);
 		delete_tab(&tmp);
 		i++;
 	}
-	(*all)->pixels->delta_size = max - min;
 	(*all)->pixels->y = i;
 	return (coord);
 }
