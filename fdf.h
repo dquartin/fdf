@@ -6,7 +6,7 @@
 /*   By: dquartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 13:49:16 by dquartin          #+#    #+#             */
-/*   Updated: 2018/04/18 21:16:44 by dquartin         ###   ########.fr       */
+/*   Updated: 2018/04/19 15:00:14 by rdagnaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define INT sizeof(int*)
 # define WIN 1500
 # define ESC 53
-# define SCALE 10
+# define SCALE 20
 # define PRES 3
 # define VIEW 2
 # define UP 125

@@ -6,7 +6,7 @@
 /*   By: dquartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 15:26:27 by dquartin          #+#    #+#             */
-/*   Updated: 2018/04/18 20:25:27 by dquartin         ###   ########.fr       */
+/*   Updated: 2018/04/19 13:57:07 by rdagnaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_struct(t_all **all)
 	free((*all)->key);
 	free((*all)->init);
 	free((*all)->pixels);
-	free (*all);
+	free(*all);
 }
 
 int		deal_key(int key, void *v_all)
