@@ -6,7 +6,7 @@
 #    By: dquartin <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/06 17:31:58 by dquartin          #+#    #+#              #
-#    Updated: 2018/04/16 15:48:57 by dquartin         ###   ########.fr        #
+#    Updated: 2018/04/18 21:28:44 by dquartin         ###   ########.fr        #
 #    Updated: 2018/02/05 17:56:51 by dquartin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -17,7 +17,8 @@ OPTIONS = -c
 FLAGS = -Wall -Wextra -Werror
 MLXFLAGS = -lmlx -framework OpenGL -framework Appkit
 SRCS = main.c\
-	   init_fdf.c
+	   init_fdf.c\
+	   draw_line.c
 LIB = -C ./libft/
 OBJS = $(SRCS:.c=.o)
 RM = rm -rf

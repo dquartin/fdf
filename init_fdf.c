@@ -6,87 +6,75 @@
 /*   By: dquartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 15:26:27 by dquartin          #+#    #+#             */
-/*   Updated: 2018/04/16 18:02:15 by dquartin         ###   ########.fr       */
+/*   Updated: 2018/04/18 20:25:27 by dquartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
-int		deal_key(int key, void *param)
+void	free_tab(int ***tab, int size)
 {
-	(void)param;
-	ft_putnbr(key);
+	int		i;
+
+	i = 0;
+	while (i < size)
+	{
+		free((*tab)[i]);
+		i++;
+	}
+	free(*tab);
+}
+
+void	free_struct(t_all **all)
+{
+	free((*all)->key);
+	free((*all)->init);
+	free((*all)->pixels);
+	free (*all);
+}
+
+int		deal_key(int key, void *v_all)
+{
+	t_all	*all;
+
+	all = (t_all*)v_all;
+	if (key == ESC)
+	{
+		mlx_clear_window(all->init->mlx_ptr, all->init->win_ptr);
+		mlx_destroy_window(all->init->mlx_ptr, all->init->win_ptr);
+		free_tab(&(all->pixels->coord), all->pixels->y);
+		free_struct(&all);
+		exit(-1);
+	}
+	key == HPLUS ? all->key->height += 2 : all->key->height;
+	key == HLESS ? all->key->height -= 2 : all->key->height;
+	key == UP ? all->key->move_up += 2 : all->key->move_up;
+	key == DOWN ? all->key->move_up -= 2 : all->key->move_up;
+	key == RIGHT ? all->key->move_left -= 2 : all->key->move_left;
+	key == LEFT ? all->key->move_left += 2 : all->key->move_left;
+	mlx_clear_window(all->init->mlx_ptr, all->init->win_ptr);
+	trace_all_segs(all);
 	return (0);
 }
 
-void    horizontal_seg(int i, int j, t_init *init)
+void	set_key(t_all **all)
 {
-	int        max;
-
-	max = i + 10;
-	while (i < max)
-	{
-		mlx_pixel_put(init->mlx_ptr, init->win_ptr, i, j, 0xFFFFFF);
-		i++;
-	}
-}
-
-void    vertical_seg(int i, int j, t_init *init)
-{
-	int        max;
-
-	max = j + 10;
-	while (j < max)
-	{
-		mlx_pixel_put(init->mlx_ptr, init->win_ptr, i, j, 0xFFFFFF);
-		j++;
-	}
-}
-
-void    trace_all_segs(t_tab **pixels, t_init *init)
-{
-	int        i;
-	int        j;
-
-	i = 0;
-	j = 0;
-	while (j < (*pixels)->x)
-	{
-		i = 0;
-		while (i < (*pixels)->y)
-		{
-			if (j + 1 < (*pixels)->x)
-				horizontal_seg(j * 10, i * 10, init);
-			if (i + 1 < (*pixels)->y)
-				vertical_seg(j * 10, i * 10, init);
-			i++;
-		}
-		j++;
-	}
-}
-
-void	init_fdf(t_tab **pixels)
-{
-	int		i;
-	int		j;
-	t_init	*init;
-
-	i = 0;
-	if (!(init = (t_init*)malloc(sizeof(t_init))))
+	if (!((*all)->key = (t_key*)malloc(sizeof(t_key))))
 		return ;
-	init->mlx_ptr = mlx_init();
-	init->win_ptr = mlx_new_window(init->mlx_ptr, 1000, 1000, "fdf");
-	while (i < (*pixels)->x)
-	{
-		j = 0;
-		while (j < (*pixels)->y)
-		{
-			mlx_pixel_put(init->mlx_ptr, init->win_ptr, i * 10, j * 10, 0xFFFFFF);
-			j++;
-		}
-		i++;
-	}
-	trace_all_segs(pixels, init);
-	mlx_key_hook(init->win_ptr, deal_key, (void*)0);
-	mlx_loop(t_init->mlx_ptr);
+	(*all)->key->height = 5;
+	(*all)->key->move_up = 10;
+	(*all)->key->move_left = 10;
+}
+
+void	init_fdf(t_all *all)
+{
+	if (!(all->init = (t_init*)malloc(sizeof(t_init))))
+		return ;
+	set_key(&all);
+	all->init->mlx_ptr = mlx_init();
+	all->init->win_ptr = mlx_new_window(all->init->mlx_ptr, WIN, WIN, "fdf");
+	trace_all_segs(all);
+	mlx_key_hook(all->init->win_ptr, deal_key, all);
+	mlx_loop(all->init->mlx_ptr);
 }
