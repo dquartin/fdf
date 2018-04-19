@@ -6,7 +6,7 @@
 /*   By: dquartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:02:29 by dquartin          #+#    #+#             */
-/*   Updated: 2018/04/19 15:20:27 by dquartin         ###   ########.fr       */
+/*   Updated: 2018/04/19 15:21:51 by dquartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ void	trace_seg(t_all *all, int i, int j)
 		trace_seg_v2(p1_projection, p2_projection, all);
 	}
 }
-
-#include <stdio.h>
 
 void	trace_all_segs(t_all *all)
 {
